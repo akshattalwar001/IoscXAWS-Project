@@ -6,13 +6,11 @@ from sqlalchemy import (
 from sqlalchemy.orm import relationship
 from database import Base
 
-
 class CategoryEnum(str, enum.Enum):
     General = "General"
     OBC = "OBC"
     SC_ST = "SC_ST"
     EWS = "EWS"
-
 
 class ScholarshipEnum(str, enum.Enum):
     none = "None"
@@ -20,16 +18,13 @@ class ScholarshipEnum(str, enum.Enum):
     SC = "SC"
     Private = "Private"
 
-
 class InternshipTypeEnum(str, enum.Enum):
     Government = "Government"
     Private = "Private"
 
-
 class PaperTypeEnum(str, enum.Enum):
     Indian = "Indian"
     Foreign = "Foreign"
-
 
 class Student(Base):
     __tablename__ = "students"
@@ -56,7 +51,6 @@ class Student(Base):
     internships = relationship("Internship", back_populates="student")
     research_papers = relationship("ResearchPaper", back_populates="student")
 
-
 class StudentClassification(Base):
     __tablename__ = "student_classification"
 
@@ -72,7 +66,6 @@ class StudentClassification(Base):
 
     student = relationship("Student", back_populates="classification")
 
-
 class ParentDetails(Base):
     __tablename__ = "parent_details"
 
@@ -84,7 +77,6 @@ class ParentDetails(Base):
     email = Column(String)
 
     student = relationship("Student", back_populates="parent_details")
-
 
 class AcademicRecords(Base):
     __tablename__ = "academic_records"
@@ -114,7 +106,6 @@ class AcademicRecords(Base):
 
     student = relationship("Student", back_populates="academic_records")
 
-
 class FinancialInfo(Base):
     __tablename__ = "financial_info"
 
@@ -125,7 +116,6 @@ class FinancialInfo(Base):
     scholarship_amount = Column(Numeric(10, 2), nullable=True)
 
     student = relationship("Student", back_populates="financial_info")
-
 
 class Internship(Base):
     __tablename__ = "internships"
@@ -140,7 +130,6 @@ class Internship(Base):
 
     student = relationship("Student", back_populates="internships")
 
-
 class ResearchPaper(Base):
     __tablename__ = "research_papers"
 
@@ -152,7 +141,6 @@ class ResearchPaper(Base):
     year = Column(Integer)
 
     student = relationship("Student", back_populates="research_papers")
-
 
 class Documents(Base):
     __tablename__ = "documents"
@@ -169,7 +157,6 @@ class Documents(Base):
 
     student = relationship("Student", back_populates="documents")
 
-
 class NocRecords(Base):
     __tablename__ = "noc_records"
 
@@ -182,7 +169,6 @@ class NocRecords(Base):
     noc_inss = Column(Boolean, default=False)
 
     student = relationship("Student", back_populates="noc_records")
-
 
 class Placement(Base):
     __tablename__ = "placement"
@@ -197,7 +183,6 @@ class Placement(Base):
     opted_entrepreneurship = Column(Boolean, default=False)
 
     student = relationship("Student", back_populates="placement")
-
 
 class AcademicDocuments(Base):
     __tablename__ = "academic_documents"
