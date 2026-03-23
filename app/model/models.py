@@ -4,7 +4,7 @@ from sqlalchemy import (
     ForeignKey, Enum
 )
 from sqlalchemy.orm import relationship
-from database import Base
+from app.core.database import Base
 
 class CategoryEnum(str, enum.Enum):
     General = "General"

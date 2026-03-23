@@ -1,7 +1,7 @@
 from typing import Optional, List
 from decimal import Decimal
 from pydantic import BaseModel, EmailStr, ConfigDict
-from models import CategoryEnum, ScholarshipEnum, InternshipTypeEnum, PaperTypeEnum
+from app.model.models import CategoryEnum, ScholarshipEnum, InternshipTypeEnum, PaperTypeEnum
 
 class StudentBase(BaseModel):
     roll_number: str
