@@ -30,6 +30,12 @@ def upgrade() -> None:
     sa.UniqueConstraint('email'),
     sa.UniqueConstraint('roll_number')
     )
+    op.create_table('users',
+    sa.Column('id', sa.Integer(), autoincrement=True, nullable=False),
+    sa.Column('username', sa.String(), nullable=False),
+    sa.Column('role', sa.Enum('student', 'admin', name='roleEnum'), nullable=False),
+    sa.Column('password_hash', sa.String(), nullable=False)
+    )
     op.create_table('academic_documents',
     sa.Column('id', sa.Integer(), autoincrement=True, nullable=False),
     sa.Column('student_id', sa.Integer(), nullable=False),
@@ -174,4 +180,5 @@ def downgrade() -> None:
     op.drop_table('documents')
     op.drop_table('academic_records')
     op.drop_table('academic_documents')
+    op.drop_table('users')
     op.drop_table('students')

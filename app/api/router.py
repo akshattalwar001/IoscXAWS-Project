@@ -1,6 +1,7 @@
 from fastapi import APIRouter
 from app.routes import (
     student,
+    auth,
     academic,
     parent,
     financial,
@@ -17,6 +18,7 @@ from app.routes import (
 router = APIRouter()
 
 router.include_router(student.router)
+router.include_router(auth.router)
 router.include_router(academic.router)
 router.include_router(parent.router)
 router.include_router(financial.router)
