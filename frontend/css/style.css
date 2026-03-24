@@ -39,6 +39,36 @@ body {
 }
 
 /* Mobile sidebar overlay backdrop */
+.mobile-menu-btn {
+  display: none;
+  font-size: 20px;
+  background: var(--bg-2);
+  border: 1px solid var(--border);
+  padding: 6px 10px;
+  padding-top: 8px;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-right: 20px;
+  margin-top: 10px;
+}
+
+.mobile-menu-btn:hover {
+  border-color: var(--text-dim);
+  box-shadow: 0 2px 4px rgba(28, 26, 26, 0.06);
+}
+
+@media (max-width: 980px) {
+  .mobile-menu-btn {
+    display: block;
+  }
+}
+
+@media (min-width: 981px) {
+  .mobile-menu-btn {
+    display: none;
+  }
+}
+
 @media (max-width: 980px) {
   body::before {
     content: '';
@@ -51,7 +81,7 @@ body {
   }
   
   body.sidebar-open::before {
-    background: rgba(0, 0, 0, 0.25);
+    background: rgba(0, 0, 0, 0.15);
     pointer-events: all;
   }
 }
@@ -71,7 +101,7 @@ a { color: inherit; text-decoration: none; }
   flex-direction: column;
   position: fixed;
   top: 0; left: 0; bottom: 0;
-  z-index: 50;
+  z-index: 1000;
   transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   box-shadow: 0 1px 3px rgba(28, 26, 26, 0.05);
   overflow: hidden;
@@ -1197,15 +1227,6 @@ input[type="file"].form-input::-webkit-file-upload-button {
   .charts-row { grid-template-columns: 1fr; }
   .info-grid { grid-template-columns: repeat(2, 1fr); }
   .sem-grid { grid-template-columns: repeat(2, 1fr); }
-  
-  /* Modal backdrop for sidebar overlay */
-  .sidebar.visible::before {
-    content: '';
-    position: fixed;
-    inset: 0;
-    background: rgba(0, 0, 0, 0.25);
-    z-index: -1;
-  }
 }
 
 @media (max-width: 600px) {
