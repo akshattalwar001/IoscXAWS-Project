@@ -9,21 +9,23 @@ from fastapi.security import OAuth2PasswordBearer
 from jwt.exceptions import InvalidTokenError
 from pwdlib import PasswordHash
 from pydantic import BaseModel
-from sqlalchemy import create_engine, Column, Integer, String, Enum as SAEnum
-from sqlalchemy.orm import sessionmaker, declarative_base, Session
+from sqlalchemy import Column, Integer, String, Enum as SAEnum
+from sqlalchemy.orm import declarative_base
+from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession, async_sessionmaker
+from sqlalchemy.future import select
 
 DATABASE_URL = os.environ.get("DATABASE_URL","//")
 
-engine = create_engine(DATABASE_URL)
-SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+engine = create_async_engine(DATABASE_URL)
+AsyncSessionLocal = async_sessionmaker(autocommit=False, autoflush=False, bind=engine, class_=AsyncSession)
 Base = declarative_base()
 
-def get_db():
-    db = SessionLocal()
-    try:
-        yield db
-    finally:
-        db.close()
+async def get_db():
+    async with AsyncSessionLocal() as db:
+        try:
+            yield db
+        finally:
+            await db.close()
 
 class RoleEnum(str, Enum):
     student = "student"
@@ -60,28 +62,29 @@ password_hash = PasswordHash.recommended()
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 
 
-def verify_password(plain_password, hashed_password):
+async def verify_password(plain_password, hashed_password):
     return password_hash.verify(plain_password, hashed_password)
 
-def get_password_hash(password):
+async def get_password_hash(password):
     return password_hash.hash(password)
 
-def get_user_by_username(db: Session, username: str):
-    return db.query(DBUser).filter(DBUser.username == username).first()
+async def get_user_by_username(db: AsyncSession, username: str):
+    result = await db.execute(select(DBUser).filter(DBUser.username == username))
+    return result.scalars().first()
 
-def create_new_user(db: Session, username: str, plain_password: str, role: RoleEnum):
+async def create_new_user(db: AsyncSession, username: str, plain_password: str, role: RoleEnum):
     hashed_pwd = get_password_hash(plain_password)
     db_user = DBUser(username=username, role=role, password_hash=hashed_pwd)
     db.add(db_user)
-    db.commit()
-    db.refresh(db_user)
+    await  db.commit()
+    await db.refresh(db_user)
     return db_user
 
-def authenticate_user(db: Session, username: str, password: str):
-    user = get_user_by_username(db, username)
+async def authenticate_user(db: AsyncSession, username: str, password: str):
+    user = await get_user_by_username(db, username)
     if not user:
         return False
-    if not verify_password(password, user.password_hash):
+    if not await verify_password(password, user.password_hash):
         return False
     return user
 
@@ -95,9 +98,9 @@ def create_access_token(data: dict, expires_delta: timedelta | None = None):
     encoded_jwt = jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
     return encoded_jwt
 
-async def get_current_user(
+def get_current_user(
     token: Annotated[str, Depends(oauth2_scheme)], 
-    db: Session = Depends(get_db)
+    db: AsyncSession = Depends(get_db)
 ):
     credentials_exception = HTTPException(
         status_code=status.HTTP_401_UNAUTHORIZED,
