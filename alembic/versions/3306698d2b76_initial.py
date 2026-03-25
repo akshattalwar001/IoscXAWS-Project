@@ -34,7 +34,9 @@ def upgrade() -> None:
     sa.Column('id', sa.Integer(), autoincrement=True, nullable=False),
     sa.Column('username', sa.String(), nullable=False),
     sa.Column('role', sa.Enum('student', 'admin', name='roleEnum'), nullable=False),
-    sa.Column('password_hash', sa.String(), nullable=False)
+    sa.Column('password_hash', sa.String(), nullable=False),
+    sa.UniqueConstraint('username'),
+    sa.PrimaryKeyConstraint('id')
     )
     op.create_table('academic_documents',
     sa.Column('id', sa.Integer(), autoincrement=True, nullable=False),
