@@ -44,7 +44,7 @@ class Token(BaseModel):
     token_type: str
 
 class TokenData(BaseModel):
-    username: str
+    id: int
 
 class User(BaseModel):
     id: int
@@ -59,7 +59,7 @@ ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 30
 
 password_hash = PasswordHash.recommended()
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/auth/token")
 
 
 async def verify_password(plain_password, hashed_password):
@@ -69,7 +69,11 @@ async def get_password_hash(password):
     return password_hash.hash(password)
 
 async def get_user_by_username(db: AsyncSession, username: str):
-    result = await db.execute(select(DBUser).filter(DBUser.username == username))
+    result = await db.execute(select(DBUser).filter(DBUser.username== username))
+    return result.scalars().first()
+
+async def get_user_by_id(db: AsyncSession, user_id: int):
+    result = await db.execute(select(DBUser).filter(DBUser.id == user_id))
     return result.scalars().first()
 
 async def create_new_user(db: AsyncSession, username: str, plain_password: str, role: RoleEnum):
@@ -98,7 +102,7 @@ def create_access_token(data: dict, expires_delta: timedelta | None = None):
     encoded_jwt = jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
     return encoded_jwt
 
-def get_current_user(
+async def get_current_user(
     token: Annotated[str, Depends(oauth2_scheme)], 
     db: AsyncSession = Depends(get_db)
 ):
@@ -109,14 +113,18 @@ def get_current_user(
     )
     try:
         payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
-        username = payload.get("sub")
-        if username is None:
+        user_id_str: str = str(payload.get("sub"))
+        
+        if user_id_str is None:
             raise credentials_exception
-        token_data = TokenData(username=username)
-    except InvalidTokenError:
+            
+        token_data = TokenData(id=int(user_id_str))
+        
+    except (InvalidTokenError, ValueError):
         raise credentials_exception
         
-    user = get_user_by_username(db, username=token_data.username)
+    user = await get_user_by_id(db, user_id=token_data.id)
     if user is None:
         raise credentials_exception
+        
     return user
