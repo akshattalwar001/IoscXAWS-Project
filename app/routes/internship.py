@@ -14,7 +14,7 @@ router = APIRouter(
 
 @router.post("/students/{student_id}/internships", response_model=schemas.InternshipResponse)
 async def create_internship(
-    student_id: int,
+    student_id: str,
     data: schemas.InternshipCreate,
     db: AsyncSession = Depends(get_db)
 ):
@@ -28,7 +28,7 @@ async def create_internship(
 
 @router.get("/students/{student_id}/internships", response_model=List[schemas.InternshipResponse])
 async def get_internships(
-    student_id: int,
+    student_id: str,
     db: AsyncSession = Depends(get_db)
 ):
     try:

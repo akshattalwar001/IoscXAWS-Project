@@ -14,7 +14,7 @@ router = APIRouter(
 
 @router.post("/", response_model=schemas.AcademicResponse)
 async def create_academic(
-    student_id: int,
+    student_id: str,
     data: schemas.AcademicCreate,
     db: AsyncSession = Depends(get_db)
 ):
@@ -28,7 +28,7 @@ async def create_academic(
 
 @router.put("/", response_model=schemas.AcademicResponse)
 async def update_academic(
-    student_id: int,
+    student_id: str,
     data: schemas.AcademicCreate,
     db: AsyncSession = Depends(get_db)
 ):
@@ -42,7 +42,7 @@ async def update_academic(
 
 @router.get("/", response_model=schemas.AcademicResponse)
 async def get_academic(
-    student_id: int,
+    student_id: str,
     db: AsyncSession = Depends(get_db)
 ):
     try:

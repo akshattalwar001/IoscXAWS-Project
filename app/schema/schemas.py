@@ -25,7 +25,6 @@ class StudentUpdate(BaseModel):
 
 class StudentResponse(StudentBase):
     model_config = ConfigDict(from_attributes=True)
-    id: int
     photo_path: Optional[str] = None
     signature_path: Optional[str] = None
 
@@ -44,7 +43,7 @@ class ClassificationCreate(ClassificationBase):
 class ClassificationResponse(ClassificationBase):
     model_config = ConfigDict(from_attributes=True)
     id: int
-    student_id: int
+    student_id: str
 
 class ParentBase(BaseModel):
     parent_name: str
@@ -58,7 +57,7 @@ class ParentCreate(ParentBase):
 class ParentResponse(ParentBase):
     model_config = ConfigDict(from_attributes=True)
     id: int
-    student_id: int
+    student_id: str
 
 class AcademicBase(BaseModel):
     sem1_cgpa: Optional[Decimal] = None
@@ -86,7 +85,7 @@ class AcademicCreate(AcademicBase):
 class AcademicResponse(AcademicBase):
     model_config = ConfigDict(from_attributes=True)
     id: int
-    student_id: int
+    student_id: str
 
 class FinancialBase(BaseModel):
     has_loan: bool = False
@@ -99,7 +98,7 @@ class FinancialCreate(FinancialBase):
 class FinancialResponse(FinancialBase):
     model_config = ConfigDict(from_attributes=True)
     id: int
-    student_id: int
+    student_id: str
 
 class InternshipBase(BaseModel):
     internship_type: InternshipTypeEnum
@@ -114,7 +113,7 @@ class InternshipCreate(InternshipBase):
 class InternshipResponse(InternshipBase):
     model_config = ConfigDict(from_attributes=True)
     id: int
-    student_id: int
+    student_id: str
 
 class ResearchBase(BaseModel):
     title: str
@@ -128,7 +127,7 @@ class ResearchCreate(ResearchBase):
 class ResearchResponse(ResearchBase):
     model_config = ConfigDict(from_attributes=True)
     id: int
-    student_id: int
+    student_id: str
 
 class DocumentsBase(BaseModel):
     aadhaar_verified: bool = False
@@ -142,7 +141,7 @@ class DocumentsCreate(DocumentsBase):
 class DocumentsResponse(DocumentsBase):
     model_config = ConfigDict(from_attributes=True)
     id: int
-    student_id: int
+    student_id: str
     aadhaar_path: Optional[str] = None
     pan_path: Optional[str] = None
     id_card_path: Optional[str] = None
@@ -160,7 +159,7 @@ class NocCreate(NocBase):
 class NocResponse(NocBase):
     model_config = ConfigDict(from_attributes=True)
     id: int
-    student_id: int
+    student_id: str
 
 class PlacementBase(BaseModel):
     internal_training: bool = False
@@ -176,7 +175,7 @@ class PlacementCreate(PlacementBase):
 class PlacementResponse(PlacementBase):
     model_config = ConfigDict(from_attributes=True)
     id: int
-    student_id: int
+    student_id: str
 
 class AcademicDocsBase(BaseModel):
     all_marksheets: bool = False
@@ -189,7 +188,7 @@ class AcademicDocsCreate(AcademicDocsBase):
 class AcademicDocsResponse(AcademicDocsBase):
     model_config = ConfigDict(from_attributes=True)
     id: int
-    student_id: int
+    student_id: str
     marksheets_path: Optional[str] = None
     provisional_cert_path: Optional[str] = None
 

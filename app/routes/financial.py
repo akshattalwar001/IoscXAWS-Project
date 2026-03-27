@@ -14,7 +14,7 @@ router = APIRouter(
 
 @router.post("/", response_model=schemas.FinancialResponse)
 async def create_financial(
-    student_id: int,
+    student_id: str,
     data: schemas.FinancialCreate,
     db: AsyncSession = Depends(get_db)
 ):
@@ -28,7 +28,7 @@ async def create_financial(
 
 @router.put("/", response_model=schemas.FinancialResponse)
 async def update_financial(
-    student_id: int,
+    student_id: str,
     data: schemas.FinancialCreate,
     db: AsyncSession = Depends(get_db)
 ):
@@ -42,7 +42,7 @@ async def update_financial(
 
 @router.get("/", response_model=schemas.FinancialResponse)
 async def get_financial(
-    student_id: int,
+    student_id: str,
     db: AsyncSession = Depends(get_db)
 ):
     try:

@@ -15,7 +15,7 @@ router = APIRouter(
 
 @router.post("/", response_model=schemas.ParentResponse)
 async def create_parent(
-    student_id: int,
+    student_id: str,
     data: schemas.ParentCreate,
     db: AsyncSession = Depends(get_db)
 ):
@@ -29,7 +29,7 @@ async def create_parent(
 
 @router.put("/", response_model=schemas.ParentResponse)
 async def update_parent(
-    student_id: int,
+    student_id: str,
     data: schemas.ParentCreate,
     db: AsyncSession = Depends(get_db)
 ):
@@ -43,7 +43,7 @@ async def update_parent(
 
 @router.get("/", response_model=schemas.ParentResponse)
 async def get_parent(
-    student_id: int,
+    student_id: str,
     db: AsyncSession = Depends(get_db)
 ):
     try:

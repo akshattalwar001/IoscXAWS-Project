@@ -14,7 +14,7 @@ router = APIRouter(
 
 @router.post("", response_model=schemas.ClassificationResponse)
 async def create_classification(
-    student_id: int,
+    student_id: str,
     data: schemas.ClassificationCreate,
     db: AsyncSession = Depends(get_db)
 ):
@@ -28,7 +28,7 @@ async def create_classification(
 
 @router.put("/", response_model=schemas.ClassificationResponse)
 async def update_classification(
-    student_id: int,
+    student_id: str,
     data: schemas.ClassificationCreate,
     db: AsyncSession = Depends(get_db)
 ):
@@ -42,7 +42,7 @@ async def update_classification(
 
 @router.get("/", response_model=schemas.ClassificationResponse)
 async def get_classification(
-    student_id: int,
+    student_id: str,
     db: AsyncSession = Depends(get_db)
 ):
     try:

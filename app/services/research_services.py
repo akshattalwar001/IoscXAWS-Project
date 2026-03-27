@@ -6,7 +6,7 @@ from app.services.student_services import get_student_basic
 
 
 # create research paper
-async def create_research(db: AsyncSession, student_id: int, data: schemas.ResearchCreate):
+async def create_research(db: AsyncSession, student_id: str, data: schemas.ResearchCreate):
     await get_student_basic(db, student_id)
 
     obj = models.ResearchPaper(
@@ -26,7 +26,7 @@ async def create_research(db: AsyncSession, student_id: int, data: schemas.Resea
 
 
 # get all research papers for a student
-async def get_research(db: AsyncSession, student_id: int):
+async def get_research(db: AsyncSession, student_id: str):
     result = await db.execute(
         select(models.ResearchPaper).where(
             models.ResearchPaper.student_id == student_id

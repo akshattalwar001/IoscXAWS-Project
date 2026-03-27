@@ -6,7 +6,7 @@ from app.services.student_services import get_student_basic
 
 
 # create new placement record for a student
-async def create_placement(db: AsyncSession, student_id: int, data: schemas.PlacementCreate):
+async def create_placement(db: AsyncSession, student_id: str, data: schemas.PlacementCreate):
     await get_student_basic(db, student_id)
 
     existing = await db.execute(
@@ -35,7 +35,7 @@ async def create_placement(db: AsyncSession, student_id: int, data: schemas.Plac
 
 
 # update existing placement record for a student
-async def update_placement(db: AsyncSession, student_id: int, data: schemas.PlacementCreate):
+async def update_placement(db: AsyncSession, student_id: str, data: schemas.PlacementCreate):
     result = await db.execute(
         select(models.Placement).where(
             models.Placement.student_id == student_id
@@ -60,7 +60,7 @@ async def update_placement(db: AsyncSession, student_id: int, data: schemas.Plac
 
 
 # get placement record for a student
-async def get_placement(db: AsyncSession, student_id: int):
+async def get_placement(db: AsyncSession, student_id: str):
     result = await db.execute(
         select(models.Placement).where(
             models.Placement.student_id == student_id

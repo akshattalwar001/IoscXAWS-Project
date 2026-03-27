@@ -7,9 +7,9 @@ from app.services.file_services import save_file
 
 
 # get student basic
-async def get_student_basic(db: AsyncSession, student_id: int):
+async def get_student_basic(db: AsyncSession, student_id: str):
     result = await db.execute(
-        select(models.Student).where(models.Student.id == student_id)
+        select(models.Student).where(models.Student.roll_number == student_id)
     )
     student = result.scalar_one_or_none()
     if not student:
@@ -18,10 +18,10 @@ async def get_student_basic(db: AsyncSession, student_id: int):
 
 
 # get student full profile
-async def get_student_full(db: AsyncSession, student_id: int):
+async def get_student_full(db: AsyncSession, student_id: str):
     result = await db.execute(
         select(models.Student)
-        .where(models.Student.id == student_id)
+        .where(models.Student.roll_number == student_id)
         .options(
             selectinload(models.Student.classification),
             selectinload(models.Student.parent_details),
@@ -68,7 +68,7 @@ async def list_students(db: AsyncSession, branch=None, year=None):
 
 
 # update existing student
-async def update_student(db: AsyncSession, student_id: int, data: schemas.StudentUpdate):
+async def update_student(db: AsyncSession, student_id: str, data: schemas.StudentUpdate):
     student = await get_student_basic(db, student_id)
 
     for key, value in data.model_dump(exclude_none=True).items():
@@ -84,7 +84,7 @@ async def update_student(db: AsyncSession, student_id: int, data: schemas.Studen
 
 
 # delete student
-async def delete_student(db: AsyncSession, student_id: int):
+async def delete_student(db: AsyncSession, student_id: str):
     student = await get_student_basic(db, student_id)
 
     try:
@@ -97,7 +97,7 @@ async def delete_student(db: AsyncSession, student_id: int):
 
 
 # upload photo
-async def upload_photo(db: AsyncSession, student_id: int, photo):
+async def upload_photo(db: AsyncSession, student_id: str, photo):
     student = await get_student_basic(db, student_id)
 
     student.photo_path = save_file(student_id, photo)
@@ -110,7 +110,7 @@ async def upload_photo(db: AsyncSession, student_id: int, photo):
         raise
 
 # upload signature
-async def upload_signature(db: AsyncSession, student_id: int, signature):
+async def upload_signature(db: AsyncSession, student_id: str, signature):
     student = await get_student_basic(db, student_id)
 
     student.signature_path = save_file(student_id, signature)

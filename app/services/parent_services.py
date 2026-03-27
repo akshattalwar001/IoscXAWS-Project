@@ -6,7 +6,7 @@ import app.model.models as models
 
 
 # Create a new parent details entry for a student
-async def create_parent(db: AsyncSession, student_id: int, data: schemas.ParentCreate):
+async def create_parent(db: AsyncSession, student_id: str, data: schemas.ParentCreate):
     await get_student_basic(db, student_id)
     existing = await db.execute(
         select(models.ParentDetails).where(
@@ -30,7 +30,7 @@ async def create_parent(db: AsyncSession, student_id: int, data: schemas.ParentC
 
 
 # Update parent details for a student
-async def update_parent(db: AsyncSession, student_id: int, data: schemas.ParentCreate):
+async def update_parent(db: AsyncSession, student_id: str, data: schemas.ParentCreate):
     result = await db.execute(
         select(models.ParentDetails).where(
             models.ParentDetails.student_id == student_id
@@ -51,7 +51,7 @@ async def update_parent(db: AsyncSession, student_id: int, data: schemas.ParentC
 
 
 # Get parent details for a student
-async def get_parent(db: AsyncSession, student_id: int):
+async def get_parent(db: AsyncSession, student_id: str):
     result = await db.execute(
         select(models.ParentDetails).where(
             models.ParentDetails.student_id == student_id

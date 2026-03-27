@@ -6,7 +6,7 @@ from app.services.student_services import get_student_basic
 
 
 # create a new classification for a student
-async def create_classification(db: AsyncSession, student_id: int, data: schemas.ClassificationCreate):
+async def create_classification(db: AsyncSession, student_id: str, data: schemas.ClassificationCreate):
     await get_student_basic(db, student_id)
 
     existing = await db.execute(
@@ -35,7 +35,7 @@ async def create_classification(db: AsyncSession, student_id: int, data: schemas
 
 
 # update an existing classification for a student
-async def update_classification(db: AsyncSession, student_id: int, data: schemas.ClassificationCreate):
+async def update_classification(db: AsyncSession, student_id: str, data: schemas.ClassificationCreate):
     result = await db.execute(
         select(models.StudentClassification).where(
             models.StudentClassification.student_id == student_id
@@ -60,7 +60,7 @@ async def update_classification(db: AsyncSession, student_id: int, data: schemas
 
 
 # get the classification for a student
-async def get_classification(db: AsyncSession, student_id: int):
+async def get_classification(db: AsyncSession, student_id: str):
     result = await db.execute(
         select(models.StudentClassification).where(
             models.StudentClassification.student_id == student_id

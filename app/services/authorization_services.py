@@ -3,7 +3,7 @@ from fastapi import Path, HTTPException, status, Depends
 from app.services.authHelper import DBUser, get_current_user, RoleEnum
 
 async def verify_user_access(
-    student_id: int = Path(...), 
+    student_id: str = Path(...), 
     current_user: DBUser = Depends(get_current_user),
 ):
     if str(current_user.role) == RoleEnum.admin:

@@ -14,7 +14,7 @@ router = APIRouter(
 
 @router.post("/students/{student_id}/research", response_model=schemas.ResearchResponse)
 async def create_research(
-    student_id: int,
+    student_id: str,
     data: schemas.ResearchCreate,
     db: AsyncSession = Depends(get_db)
 ):
@@ -28,7 +28,7 @@ async def create_research(
 
 @router.get("/students/{student_id}/research", response_model=List[schemas.ResearchResponse])
 async def get_research(
-    student_id: int,
+    student_id: str,
     db: AsyncSession = Depends(get_db)
 ):
     try:

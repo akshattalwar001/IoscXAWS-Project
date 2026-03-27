@@ -17,7 +17,7 @@ router = APIRouter(
 
 @router.post("/", response_model=schemas.DocumentsResponse)
 async def create_documents(
-    student_id: int,
+    student_id: str,
     data: schemas.DocumentsCreate,
     db: AsyncSession = Depends(get_db)
 ):
@@ -31,7 +31,7 @@ async def create_documents(
 
 @router.put("/", response_model=schemas.DocumentsResponse)
 async def update_documents(
-    student_id: int,
+    student_id: str,
     data: schemas.DocumentsCreate,
     db: AsyncSession = Depends(get_db)
 ):
@@ -45,7 +45,7 @@ async def update_documents(
 
 @router.get("/", response_model=schemas.DocumentsResponse)
 async def get_documents(
-    student_id: int,
+    student_id: str,
     db: AsyncSession = Depends(get_db)
 ):
     try:
@@ -56,7 +56,7 @@ async def get_documents(
 
 @router.post("/upload")
 async def upload_documents(
-    student_id: int,
+    student_id: str,
     aadhaar: Optional[UploadFile] = File(None),
     pan: Optional[UploadFile] = File(None),
     id_card: Optional[UploadFile] = File(None),

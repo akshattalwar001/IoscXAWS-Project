@@ -15,7 +15,7 @@ router = APIRouter(
 
 @router.post("/", response_model=schemas.NocResponse)
 async def create_noc(
-    student_id: int,
+    student_id: str,
     data: schemas.NocCreate,
     db: AsyncSession = Depends(get_db)
 ):
@@ -29,7 +29,7 @@ async def create_noc(
 
 @router.put("/", response_model=schemas.NocResponse)
 async def update_noc(
-    student_id: int,
+    student_id: str,
     data: schemas.NocCreate,
     db: AsyncSession = Depends(get_db)
 ):
@@ -43,7 +43,7 @@ async def update_noc(
 
 @router.get("/", response_model=schemas.NocResponse)
 async def get_noc(
-    student_id: int,
+    student_id: str,
     db: AsyncSession = Depends(get_db)
 ):
     try:

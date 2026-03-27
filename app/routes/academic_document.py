@@ -17,7 +17,7 @@ router = APIRouter(
 
 @router.post("/", response_model=schemas.AcademicDocsResponse)
 async def create_academic_docs(
-    student_id: int,
+    student_id: str,
     data: schemas.AcademicDocsCreate,
     db: AsyncSession = Depends(get_db)
 ):
@@ -31,7 +31,7 @@ async def create_academic_docs(
 
 @router.put("/", response_model=schemas.AcademicDocsResponse)
 async def update_academic_docs(
-    student_id: int,
+    student_id: str,
     data: schemas.AcademicDocsCreate,
     db: AsyncSession = Depends(get_db)
 ):
@@ -45,7 +45,7 @@ async def update_academic_docs(
 
 @router.get("/", response_model=schemas.AcademicDocsResponse)
 async def get_academic_docs(
-    student_id: int,
+    student_id: str,
     db: AsyncSession = Depends(get_db)
 ):
     try:
@@ -56,7 +56,7 @@ async def get_academic_docs(
 
 @router.post("/upload")
 async def upload_academic_docs(
-    student_id: int,
+    student_id: str,
     marksheets: Optional[UploadFile] = File(None),
     provisional_cert: Optional[UploadFile] = File(None),
     db: AsyncSession = Depends(get_db)

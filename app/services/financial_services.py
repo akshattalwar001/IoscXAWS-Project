@@ -6,7 +6,7 @@ from app.services.student_services import get_student_basic
 
 
 # Create financial info for a student
-async def create_financial(db: AsyncSession, student_id: int, data: schemas.FinancialCreate):
+async def create_financial(db: AsyncSession, student_id: str, data: schemas.FinancialCreate):
     await get_student_basic(db, student_id)
 
     existing = await db.execute(
@@ -35,7 +35,7 @@ async def create_financial(db: AsyncSession, student_id: int, data: schemas.Fina
 
 
 # Update financial info for a student
-async def update_financial(db: AsyncSession, student_id: int, data: schemas.FinancialCreate):
+async def update_financial(db: AsyncSession, student_id: str, data: schemas.FinancialCreate):
     result = await db.execute(
         select(models.FinancialInfo).where(
             models.FinancialInfo.student_id == student_id
@@ -60,7 +60,7 @@ async def update_financial(db: AsyncSession, student_id: int, data: schemas.Fina
 
 
 # Get financial info for a student
-async def get_financial(db: AsyncSession, student_id: int):
+async def get_financial(db: AsyncSession, student_id: str):
     result = await db.execute(
         select(models.FinancialInfo).where(
             models.FinancialInfo.student_id == student_id

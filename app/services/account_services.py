@@ -28,11 +28,9 @@ class RoleEnum(str, Enum):
 class DBUser(Base):
     __tablename__ = "users"
     
-    id = Column(Integer, primary_key=True, autoincrement=True)
-    username = Column(String, nullable=False, unique=True)
+    username = Column(String, primary_key=True, index=True) 
     role = Column(SAEnum(RoleEnum), nullable=False)
     password_hash = Column(String, nullable=False)
-
 
 pwd_hasher = PasswordHash.recommended()
  

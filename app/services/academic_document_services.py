@@ -7,7 +7,7 @@ from app.services.file_services import save_file
 
 
 # create academic documents record for a student    
-async def create_academic_docs(db: AsyncSession, student_id: int, data: schemas.AcademicDocsCreate):
+async def create_academic_docs(db: AsyncSession, student_id: str, data: schemas.AcademicDocsCreate):
     await get_student_basic(db, student_id)
 
     existing = await db.execute(
@@ -36,7 +36,7 @@ async def create_academic_docs(db: AsyncSession, student_id: int, data: schemas.
 
 
 # update academic documents record for a student
-async def update_academic_docs(db: AsyncSession, student_id: int, data: schemas.AcademicDocsCreate):
+async def update_academic_docs(db: AsyncSession, student_id: str, data: schemas.AcademicDocsCreate):
     result = await db.execute(
         select(models.AcademicDocuments).where(
             models.AcademicDocuments.student_id == student_id
@@ -61,7 +61,7 @@ async def update_academic_docs(db: AsyncSession, student_id: int, data: schemas.
 
 
 # get academic documents record for a student
-async def get_academic_docs(db: AsyncSession, student_id: int):
+async def get_academic_docs(db: AsyncSession, student_id: str):
     result = await db.execute(
         select(models.AcademicDocuments).where(
             models.AcademicDocuments.student_id == student_id
@@ -79,7 +79,7 @@ async def get_academic_docs(db: AsyncSession, student_id: int):
 # upload academic documents files for a student
 async def upload_academic_docs(
     db: AsyncSession,
-    student_id: int,
+    student_id: str,
     marksheets=None,
     provisional_cert=None
 ):

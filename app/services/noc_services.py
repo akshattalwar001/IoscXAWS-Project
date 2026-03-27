@@ -6,7 +6,7 @@ from app.services.student_services import get_student_basic
 
 
 # create a new NOC record for a student
-async def create_noc(db: AsyncSession, student_id: int, data: schemas.NocCreate):
+async def create_noc(db: AsyncSession, student_id: str, data: schemas.NocCreate):
     await get_student_basic(db, student_id)
 
     existing = await db.execute(
@@ -35,7 +35,7 @@ async def create_noc(db: AsyncSession, student_id: int, data: schemas.NocCreate)
 
 
 # update existing NOC record for a student
-async def update_noc(db: AsyncSession, student_id: int, data: schemas.NocCreate):
+async def update_noc(db: AsyncSession, student_id: str, data: schemas.NocCreate):
     result = await db.execute(
         select(models.NocRecords).where(
             models.NocRecords.student_id == student_id
@@ -60,7 +60,7 @@ async def update_noc(db: AsyncSession, student_id: int, data: schemas.NocCreate)
 
 
 # get NOC record for a student
-async def get_noc(db: AsyncSession, student_id: int):
+async def get_noc(db: AsyncSession, student_id: str):
     result = await db.execute(
         select(models.NocRecords).where(
             models.NocRecords.student_id == student_id

@@ -7,7 +7,7 @@ from app.services.file_services import save_file
 
 
 # create a new documents record for a student
-async def create_documents(db: AsyncSession, student_id: int, data: schemas.DocumentsCreate):
+async def create_documents(db: AsyncSession, student_id: str, data: schemas.DocumentsCreate):
     await get_student_basic(db, student_id)
 
     existing = await db.execute(
@@ -36,7 +36,7 @@ async def create_documents(db: AsyncSession, student_id: int, data: schemas.Docu
 
 
 # update existing documents record for a student
-async def update_documents(db: AsyncSession, student_id: int, data: schemas.DocumentsCreate):
+async def update_documents(db: AsyncSession, student_id: str, data: schemas.DocumentsCreate):
     result = await db.execute(
         select(models.Documents).where(
             models.Documents.student_id == student_id
@@ -61,7 +61,7 @@ async def update_documents(db: AsyncSession, student_id: int, data: schemas.Docu
 
 
 # get documents for a student
-async def get_documents(db: AsyncSession, student_id: int):
+async def get_documents(db: AsyncSession, student_id: str):
     result = await db.execute(
         select(models.Documents).where(
             models.Documents.student_id == student_id
@@ -79,7 +79,7 @@ async def get_documents(db: AsyncSession, student_id: int):
 # upload document files for a student
 async def upload_documents(
     db: AsyncSession,
-    student_id: int,
+    student_id: str,
     aadhaar=None,
     pan=None,
     id_card=None

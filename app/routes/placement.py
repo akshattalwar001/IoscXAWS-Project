@@ -15,7 +15,7 @@ router = APIRouter(
 
 @router.post("/", response_model=schemas.PlacementResponse)
 async def create_placement(
-    student_id: int,
+    student_id: str,
     data: schemas.PlacementCreate,
     db: AsyncSession = Depends(get_db)
 ):
@@ -29,7 +29,7 @@ async def create_placement(
 
 @router.put("/", response_model=schemas.PlacementResponse)
 async def update_placement(
-    student_id: int,
+    student_id: str,
     data: schemas.PlacementCreate,
     db: AsyncSession = Depends(get_db)
 ):
@@ -43,7 +43,7 @@ async def update_placement(
 
 @router.get("/", response_model=schemas.PlacementResponse)
 async def get_placement(
-    student_id: int,
+    student_id: str,
     db: AsyncSession = Depends(get_db)
 ):
     try:

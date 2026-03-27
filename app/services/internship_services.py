@@ -6,7 +6,7 @@ from app.services.student_services import get_student_basic
 
 
 # Create a new internship for a student
-async def create_internship(db: AsyncSession, student_id: int, data: schemas.InternshipCreate):
+async def create_internship(db: AsyncSession, student_id: str, data: schemas.InternshipCreate):
     await get_student_basic(db, student_id)
 
     obj = models.Internship(
@@ -26,7 +26,7 @@ async def create_internship(db: AsyncSession, student_id: int, data: schemas.Int
 
 
 # get all internships for a student
-async def get_internships(db: AsyncSession, student_id: int):
+async def get_internships(db: AsyncSession, student_id: str):
     result = await db.execute(
         select(models.Internship).where(
             models.Internship.student_id == student_id
