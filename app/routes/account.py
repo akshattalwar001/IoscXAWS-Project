@@ -3,9 +3,11 @@ from typing import Annotated
 
 from fastapi import Depends, HTTPException, status, APIRouter
 from fastapi.security import OAuth2PasswordRequestForm
+from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.services.authHelper import *
-from app.services.account_services import *
+from app.services.authHelper import User, get_current_user
+from app.services.account_services import changeUserPassword
+from app.core.database import get_db
 
 router = APIRouter(
     prefix="/account",
@@ -22,7 +24,8 @@ async def whoAmI(
 async def change_password(
     user_id: int,
     new_password: str,
-    current_user: Annotated[User, Depends(get_current_user)]
+    current_user: Annotated[User, Depends(get_current_user)],
+    db: AsyncSession = Depends(get_db)
 ):
     if current_user.id != user_id:
         raise HTTPException(
@@ -30,5 +33,5 @@ async def change_password(
             detail="You can only change your own password"
         )
 
-    await changeUserPassword(user_id,new_password)
+    await changeUserPassword(db, user_id, new_password)
     return {"message": f" password change successfull "}

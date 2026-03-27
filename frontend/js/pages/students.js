@@ -51,8 +51,8 @@ function renderTable(students) {
       <td>${s.mobile}</td>
       <td>
         <div class="action-btns">
-          <a href="profile.html?id=${s.id}" class="btn btn-ghost btn-sm">View</a>
-          <button class="btn btn-danger btn-sm" onclick="promptDelete(${s.id})">Delete</button>
+          <a href="profile.html?id=${s.roll_number}" class="btn btn-ghost btn-sm">View</a>
+          <button class="btn btn-danger btn-sm" onclick="promptDelete('${s.roll_number}')">Delete</button>
         </div>
       </td>
     </tr>

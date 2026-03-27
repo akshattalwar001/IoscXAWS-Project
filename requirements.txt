@@ -8,3 +8,5 @@ python-multipart
 python-dotenv
 psycopg2-binary
 gunicorn
+pwdlib[argon2]
+PyJWT

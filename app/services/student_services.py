@@ -88,7 +88,7 @@ async def delete_student(db: AsyncSession, student_id: str):
     student = await get_student_basic(db, student_id)
 
     try:
-        await db.delete(student)
+        db.delete(student)
         await db.commit()
         return {"detail": "Student deleted"}
     except Exception:

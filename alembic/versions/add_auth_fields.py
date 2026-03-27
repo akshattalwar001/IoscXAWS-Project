@@ -1,7 +1,7 @@
 """Add enrollment_number and password_changed to users table
 
 Revision ID: add_auth_fields
-Revises: 3306698d2b76
+Revises: e20b79799835
 Create Date: 2024-03-24 12:00:00.000000
 
 """
@@ -11,7 +11,7 @@ import sqlalchemy as sa
 
 # revision identifiers, used by Alembic.
 revision = 'add_auth_fields'
-down_revision = '3306698d2b76'
+down_revision = 'e20b79799835'
 branch_labels = None
 depends_on = None
 

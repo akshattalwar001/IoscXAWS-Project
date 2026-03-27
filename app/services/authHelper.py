@@ -14,30 +14,12 @@ from sqlalchemy.orm import declarative_base
 from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession, async_sessionmaker
 from sqlalchemy.future import select
 
-DATABASE_URL = os.environ.get("DATABASE_URL","//")
-
-engine = create_async_engine(DATABASE_URL)
-AsyncSessionLocal = async_sessionmaker(autocommit=False, autoflush=False, bind=engine, class_=AsyncSession)
-Base = declarative_base()
-
-async def get_db():
-    async with AsyncSessionLocal() as db:
-        try:
-            yield db
-        finally:
-            await db.close()
+from app.core.database import Base, get_db
+from app.model.models import DBUser
 
 class RoleEnum(str, Enum):
     student = "student"
     admin = "admin"
-
-class DBUser(Base):
-    __tablename__ = "users"
-    
-    id = Column(Integer, primary_key=True, autoincrement=True)
-    username = Column(String, nullable=False, unique=True)
-    role = Column(SAEnum(RoleEnum), nullable=False)
-    password_hash = Column(String, nullable=False)
 
 class Token(BaseModel):
     access_token: str
@@ -45,6 +27,14 @@ class Token(BaseModel):
 
 class TokenData(BaseModel):
     id: int
+
+class LoginRequest(BaseModel):
+    username: str
+    password: str
+
+class ChangePasswordRequest(BaseModel):
+    old_password: str
+    new_password: str
 
 class User(BaseModel):
     id: int
