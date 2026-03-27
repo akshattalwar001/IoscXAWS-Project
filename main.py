@@ -18,11 +18,18 @@ app.add_middleware(
     allow_credentials=True,
 )
 
+# Mount API routes
+app.include_router(router)
+
+# Mount static files (frontend and uploads)
 UPLOAD_DIR = os.getenv("UPLOAD_DIR", "uploads")
 os.makedirs(UPLOAD_DIR, exist_ok=True)
 app.mount("/uploads", StaticFiles(directory=UPLOAD_DIR), name="uploads")
 
-app.include_router(router)
+# Mount frontend static files
+FRONTEND_DIR = os.path.join(os.path.dirname(__file__), "frontend")
+if os.path.exists(FRONTEND_DIR):
+    app.mount("/static", StaticFiles(directory=FRONTEND_DIR), name="static")
 
 @app.get("/")
 async def root():

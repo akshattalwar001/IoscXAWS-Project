@@ -10,3 +10,7 @@ psycopg2-binary
 gunicorn
 pwdlib[argon2]
 PyJWT
+pytest
+pytest-asyncio
+httpx
+aiosqlite

@@ -8,18 +8,18 @@ from typing import List, Optional
 from app.services import student_services
 from app.services.authorization_services import verify_user_access
 from app.services.authHelper import get_current_user
-from app.model.models import DBUser
+from app.model.models import DBUser, RoleEnum
 
 router = APIRouter(prefix="/students", tags=["Students"])
 
 
-@router.post("/", response_model=schemas.StudentResponse)
+@router.post("", response_model=schemas.StudentResponse)
 async def create_student(
     student: schemas.StudentCreate, 
     db: AsyncSession = Depends(get_db),
     current_user: DBUser = Depends(get_current_user) 
 ):
-    if str(current_user.role) == "student":
+    if current_user.role == RoleEnum.student:
         student.roll_number = str(current_user.username) 
         
     try:
@@ -27,7 +27,7 @@ async def create_student(
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
-@router.get("/", response_model=List[schemas.StudentResponse])
+@router.get("", response_model=List[schemas.StudentResponse])
 async def list_students(
     branch: Optional[str] = None,
     year: Optional[int] = None,
@@ -36,13 +36,15 @@ async def list_students(
 ):
 
     try:
-        if str(current_user.role) != "admin":
+        if current_user.role.value != "admin":
             raise HTTPException(
                     status_code=status.HTTP_403_FORBIDDEN,
                     detail="You can only see your information"
                 )
 
         return await student_services.list_students(db, branch, year)
+    except HTTPException:
+        raise
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
