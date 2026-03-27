@@ -63,7 +63,7 @@ async function submitStudentLogin(e) {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        enrollment_number: enrollmentNumber,
+        username: enrollmentNumber,
         password: password
       })
     });
@@ -78,17 +78,12 @@ async function submitStudentLogin(e) {
     
     const data = await response.json();
     
-    // Store token and user info
+    // Store token
     localStorage.setItem('token', data.access_token);
-    localStorage.setItem('role', data.role);
-    localStorage.setItem('must_change_password', data.must_change_password);
+    localStorage.setItem('role', 'student');
     
-    // Redirect based on password change requirement
-    if (data.must_change_password) {
-      window.location.href = 'change-password.html';
-    } else {
-      window.location.href = 'dashboard2.html';
-    }
+    // Redirect to student dashboard
+    window.location.href = 'dashboard2.html';
   } catch (error) {
     console.error('Login error:', error);
     showAlert('Connection error. Please try again.', 'error');
@@ -120,7 +115,7 @@ async function submitAdminLogin(e) {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        admin_id: adminId,
+        username: adminId,
         password: password
       })
     });
@@ -135,12 +130,11 @@ async function submitAdminLogin(e) {
     
     const data = await response.json();
     
-    // Store token and user info
+    // Store token
     localStorage.setItem('token', data.access_token);
-    localStorage.setItem('role', data.role);
-    localStorage.setItem('must_change_password', 'false');
+    localStorage.setItem('role', 'admin');
     
-    // Redirect to dashboard
+    // Redirect to admin dashboard
     window.location.href = 'index.html';
   } catch (error) {
     console.error('Login error:', error);
