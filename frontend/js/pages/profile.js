@@ -474,8 +474,9 @@ document.getElementById("saveInternship").addEventListener("click", async () => 
 async function deleteInternship(id) {
   if (!confirm("Delete this internship?")) return;
   try {
+    id = String(id);
     await apiFetch(`/internships/${id}`, { method: "DELETE" });
-    studentData.internships = studentData.internships.filter(i => i.id !== id);
+    studentData.internships = studentData.internships.filter(i => String(i.id) !== id);
     renderInternships(studentData.internships);
     showAlert("profileAlert", "Internship deleted.", "success");
   } catch (e) {
@@ -512,8 +513,9 @@ document.getElementById("saveResearch").addEventListener("click", async () => {
 async function deleteResearch(id) {
   if (!confirm("Delete this research paper?")) return;
   try {
+    id = String(id);
     await apiFetch(`/research/${id}`, { method: "DELETE" });
-    studentData.research_papers = studentData.research_papers.filter(r => r.id !== id);
+    studentData.research_papers = studentData.research_papers.filter(r => String(r.id) !== id);
     renderResearch(studentData.research_papers);
     showAlert("profileAlert", "Research paper deleted.", "success");
   } catch (e) {

@@ -72,7 +72,7 @@ document.getElementById("searchInput").addEventListener("input", (e) => {
 });
 
 function promptDelete(id) {
-  deleteTargetId = id;
+  deleteTargetId = String(id);
   document.getElementById("deleteModal").classList.add("visible");
 }
 

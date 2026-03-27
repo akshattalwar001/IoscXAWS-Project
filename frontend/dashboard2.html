@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/jpeg" href="ipu.jpg"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Student Dashboard - E-Student Cell</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Source+Sans+3:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap" rel="stylesheet"/>
+</head>
+<body>
+
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="sidebar-brand">
+        <div class="sidebar-brand-info">
+          <div class="brand-mark">
+            <img src="ipu.jpg" alt="ESC Logo" class="brand-logo"/>
+          </div>
+          <div class="brand-text">
+            <span class="brand-title">E-Student Cell</span>
+            <span class="brand-sub">Management System</span>
+          </div>
+        </div>
+        <button class="sidebar-toggle" id="sidebarToggle" aria-label="Toggle Sidebar">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M15 3v18"/></svg>
+        </button>
+      </div>
+
+      <!-- Student Navigation (Limited) -->
+      <nav class="sidebar-nav">
+        <a href="dashboard2.html" class="nav-item active">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+          <span class="nav-item-label">Dashboard</span>
+        </a>
+        <a href="profile.html" class="nav-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          <span class="nav-item-label">My Profile</span>
+        </a>
+      </nav>
+
+      <div class="theme-switcher-section">
+        <div class="theme-toggle-container">
+          <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+            <svg class="sun-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-sun"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
+            <svg class="moon-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-moon"><path d="M20.985 12.486a9 9 0 1 1-9.473-9.472c.405-.022.617.46.402.803a6 6 0 0 0 8.268 8.268c.344-.215.825-.004.803.401"/></svg>
+          </button>
+          <span class="theme-label" id="themeLabel">Light</span>
+        </div>
+      </div>
+
+      <div class="sidebar-footer">
+        <div class="sidebar-footer-content">
+          <div class="api-status" id="apiStatus">
+            <span class="status-dot"></span>
+            <span class="status-text">Connecting...</span>
+          </div>
+          <button class="logout-btn" id="logoutBtn" aria-label="Logout">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><path d="m16 17 5-5-5-5"/><path d="M21 12H9"/><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/></svg>
+            <span class="logout-text">Logout</span>
+          </button>
+        </div>
+      </div>
+    </aside>
+
+    <main class="main-content">
+      <header class="page-header">
+        <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Toggle Mobile Menu">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        </button>
+        <div class="header-left">
+          <div>
+            <h1 class="page-title">Student Dashboard</h1>
+            <p class="page-subtitle">Welcome to your personal dashboard</p>
+          </div>
+        </div>
+      </header>
+
+      <!-- Student Dashboard Content -->
+      <div class="stats-grid" id="statsGrid">
+        <div class="stat-card">
+          <div class="stat-label">Enrollment Number</div>
+          <div class="stat-value" id="enrollmentNumber">—</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Name</div>
+          <div class="stat-value" id="studentName">—</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Branch</div>
+          <div class="stat-value" id="studentBranch">—</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Year</div>
+          <div class="stat-value" id="studentYear">—</div>
+        </div>
+      </div>
+
+      <div class="charts-row">
+        <div class="chart-card">
+          <h3 class="chart-title">Quick Actions</h3>
+          <div style="padding: 1.5rem;">
+            <p style="margin-bottom: 1rem; color: var(--text-muted); font-size: 13px;">
+              Access your profile to view and update your personal information.
+            </p>
+            <a href="profile.html" style="display: inline-block; padding: 10px 16px; background: var(--accent); color: var(--bg); border-radius: var(--radius); text-decoration: none; font-weight: 600; font-size: 13px; transition: all 0.2s;" onmouseover="this.style.background = 'var(--accent-hover)'" onmouseout="this.style.background = 'var(--accent)'">
+              View My Profile
+            </a>
+          </div>
+        </div>
+        <div class="chart-card">
+          <h3 class="chart-title">Account Settings</h3>
+          <div style="padding: 1.5rem;">
+            <p style="margin-bottom: 1rem; color: var(--text-muted); font-size: 13px;">
+              Manage your account preferences, password, and contact information.
+            </p>
+            <button onclick="showAccountSettings()" style="padding: 10px 16px; background: var(--accent); color: var(--bg); border: none; border-radius: var(--radius); font-weight: 600; font-size: 13px; cursor: pointer; transition: all 0.2s;" onmouseover="this.style.background = 'var(--accent-hover)'" onmouseout="this.style.background = 'var(--accent)'">
+              Account Settings
+            </button>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <footer class="universal-footer">Made by IoSC & AWS EDC</footer>
+
+  <script src="js/api.js"></script>
+  <script src="js/pages/dashboard2.js"></script>
+</body>
+</html>
