@@ -3,10 +3,10 @@ from typing import Annotated
 from fastapi import Depends, HTTPException, status, APIRouter
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.services.authHelper import User, get_current_user
+from app.services.authHelper import User, get_current_user, get_user_by_id
 from app.services.account_services import changeUserPassword, resetPasswordToDefault
 from app.core.database import get_db
-from app.model.models import RoleEnum
+from app.model.models import DBUser, RoleEnum
 
 router = APIRouter(
     prefix="/account",
@@ -22,19 +22,13 @@ async def whoAmI(
     return {"message": f"you are {current_user.username} with id {current_user.id} "}
 
 
-@router.post("/change/{user_id}/password")
+@router.post("/change-password")
 async def change_password(
-    user_id: int,
     new_password: str,
     current_user: Annotated[User, Depends(get_current_user)],
     db: AsyncSession = Depends(get_db)
 ):
-    if current_user.id != user_id:
-        raise HTTPException(
-            status_code=status.HTTP_403_FORBIDDEN,
-            detail="You can only change your own password"
-        )
-    await changeUserPassword(db, user_id, new_password)
+    await changeUserPassword(db, current_user.id, new_password)
     return {"message": "password change successful"}
 
 

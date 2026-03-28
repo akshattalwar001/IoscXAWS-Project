@@ -101,7 +101,7 @@ async function submitChangePassword(e) {
       return;
     }
     
-    const response = await fetch(`${API}/auth/change-password`, {
+    const response = await fetch(`${API}/account/change-password`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
