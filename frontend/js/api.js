@@ -143,7 +143,7 @@ document.addEventListener("DOMContentLoaded", () => {
   if (logoutBtn) {
     logoutBtn.addEventListener("click", () => {
       if (confirm("Are you sure you want to logout?")) {
-        window.location.href = "/frontend/login.html";
+        window.location.href = "/login.html";
       }
     });
   }
