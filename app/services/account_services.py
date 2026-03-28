@@ -38,3 +38,4 @@ async def resetPasswordToDefault(db: AsyncSession, student_id: str):
         .values(password_hash=hashed_pw, password_changed=False)
     )
     await db.commit()
+    
