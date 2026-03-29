@@ -26,7 +26,7 @@ async def create_classification(
         raise HTTPException(status_code=500, detail=str(e))
 
 
-@router.put("/", response_model=schemas.ClassificationResponse)
+@router.put("", response_model=schemas.ClassificationResponse)
 async def update_classification(
     student_id: str,
     data: schemas.ClassificationCreate,
@@ -40,7 +40,7 @@ async def update_classification(
         raise HTTPException(status_code=500, detail=str(e))
 
 
-@router.get("/", response_model=schemas.ClassificationResponse)
+@router.get("", response_model=schemas.ClassificationResponse)
 async def get_classification(
     student_id: str,
     db: AsyncSession = Depends(get_db)
