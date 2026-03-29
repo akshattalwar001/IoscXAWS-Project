@@ -10,14 +10,15 @@ async def populate_users():
         data = json.load(f)
 
     async with SessionLocal() as db:
-        # Fetch all existing usernames in ONE query
+        # re-add skip check so re-runs are safe
         result = await db.execute(select(DBUser.username))
         existing_usernames = set(result.scalars().all())
-        print(f"Found {len(existing_usernames)} existing users in DB")
 
         created = 0
         skipped = 0
-        for entry in data:
+        failed = 0
+
+        for i, entry in enumerate(data):
             username = entry["username"]
             password = entry["password"]
 
@@ -25,10 +26,15 @@ async def populate_users():
                 skipped += 1
                 continue
 
-            await create_new_user(db, username=username, plain_password=password, role=RoleEnum.student)
-            print(f"Created user: {username}")
-            created += 1
+            try:
+                await create_new_user(db, username=username, plain_password=password, role=RoleEnum.student)
+                print(f"[{i+1}/{len(data)}] Created: {username}")
+                created += 1
+            except Exception as e:
+                print(f"[{i+1}/{len(data)}] Failed: {username} — {e}")
+                failed += 1
+                continue
 
-        print(f"\nDone. Created: {created}, Skipped: {skipped}")
+        print(f"\nDone. Created: {created}, Skipped: {skipped}, Failed: {failed}")
 
 asyncio.run(populate_users())
