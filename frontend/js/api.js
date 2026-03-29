@@ -19,10 +19,10 @@ async function checkApiStatus() {
   try {
     await fetch(API + "/");
     el.className = "api-status online";
-    el.querySelector(".status-text").textContent = "API Online";
+    el.querySelector(".status-text").textContent = "Service Online";
   } catch {
     el.className = "api-status offline";
-    el.querySelector(".status-text").textContent = "API Offline";
+    el.querySelector(".status-text").textContent = "Service Offline";
   }
 }
 
