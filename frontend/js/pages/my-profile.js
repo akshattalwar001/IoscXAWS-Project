@@ -1,5 +1,6 @@
 let studentId = null;
 
+let isStudentNew = false;
 let studentData = null;
 let classificationExists = false;
 let parentExists = false;
@@ -21,12 +22,27 @@ function getPhotoUrl(photo_path) {
 async function loadProfile() {
   try {
     const me = await apiFetch(`/auth/me`);
-    if (!me.enrollment_number) {
+    const enrollNo = me.enrollment_number || me.username;
+    
+    if (!enrollNo) {
         window.location.href = 'login.html';
         return;
     }
-    studentId = me.enrollment_number;
-    studentData = await apiFetch(`/students/${studentId}`);
+    studentId = enrollNo;
+
+    // Fallback UI
+    const el = document.getElementById("enrollmentNumber"); if (el) el.textContent = studentId;
+    document.getElementById("profileMeta").textContent = "Data Not entered";
+
+    try {
+      studentData = await apiFetch(`/students/${studentId}`);
+      isStudentNew = false;
+    } catch (e) {
+      isStudentNew = true;
+      // If student not found, initialize a blank student info
+      studentData = { roll_number: studentId, name: 'Data Not entered', branch: 'Data Not entered', year: 1, email: '', mobile: '' };
+    }
+
     renderBasicInfo(studentData);
     renderClassification(studentData.classification);
     renderParent(studentData.parent_details);
@@ -249,11 +265,11 @@ document.querySelectorAll(".tab-btn").forEach(btn => {
 document.getElementById("editBasicBtn").addEventListener("click", () => {
   document.getElementById("basicInfoView").classList.add("hidden");
   document.getElementById("basicInfoEdit").classList.remove("hidden");
-  document.getElementById("edit_name").value = studentData.name;
-  document.getElementById("edit_branch").value = studentData.branch;
-  document.getElementById("edit_year").value = studentData.year;
-  document.getElementById("edit_email").value = studentData.email;
-  document.getElementById("edit_mobile").value = studentData.mobile;
+  document.getElementById("edit_name").value = studentData.name !== 'Data Not entered' ? studentData.name : '';
+  document.getElementById("edit_branch").value = studentData.branch !== 'Data Not entered' ? studentData.branch : 'AIDS';
+  document.getElementById("edit_year").value = studentData.year || 1;
+  document.getElementById("edit_email").value = studentData.email || '';
+  document.getElementById("edit_mobile").value = studentData.mobile || '';
   document.getElementById("edit_address").value = studentData.address || "";
 });
 
@@ -264,17 +280,30 @@ document.getElementById("cancelEditBasic").addEventListener("click", () => {
 
 document.getElementById("saveBasicBtn").addEventListener("click", async () => {
   try {
-    const updated = await apiFetch(`/students/${studentId}`, {
-      method: "PUT",
-      body: JSON.stringify({
-        name: document.getElementById("edit_name").value,
-        branch: document.getElementById("edit_branch").value,
-        year: parseInt(document.getElementById("edit_year").value),
-        email: document.getElementById("edit_email").value,
-        mobile: document.getElementById("edit_mobile").value,
-        address: document.getElementById("edit_address").value || null,
-      }),
-    });
+    const payload = {
+      roll_number: studentId,
+      name: document.getElementById("edit_name").value,
+      branch: document.getElementById("edit_branch").value,
+      year: parseInt(document.getElementById("edit_year").value),
+      email: document.getElementById("edit_email").value,
+      mobile: document.getElementById("edit_mobile").value,
+      address: document.getElementById("edit_address").value || null,
+    };
+
+    let updated;
+    if (isStudentNew) {
+      updated = await apiFetch(`/students`, {
+        method: "POST",
+        body: JSON.stringify(payload),
+      });
+      isStudentNew = false;
+    } else {
+      updated = await apiFetch(`/students/${studentId}`, {
+        method: "PUT",
+        body: JSON.stringify(payload),
+      });
+    }
+
     studentData = { ...studentData, ...updated };
     renderBasicInfo(studentData);
     document.getElementById("basicInfoView").classList.remove("hidden");
