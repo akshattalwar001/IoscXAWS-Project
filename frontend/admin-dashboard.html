@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <link rel="icon" type="image/jpeg" href="ipu.jpg"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Add Student — E-Student Cell</title>
+  <title>E-Student Cell - Admin Dashboard</title>
   <link rel="stylesheet" href="css/style.css" />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Source+Sans+3:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap" rel="stylesheet"/>
 </head>
@@ -26,8 +26,9 @@
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M15 3v18"/></svg>
         </button>
       </div>
+
       <nav class="sidebar-nav">
-        <a href="admin-dashboard.html" class="nav-item">
+        <a href="admin-dashboard.html" class="nav-item active">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
           <span class="nav-item-label">Dashboard</span>
         </a>
@@ -35,12 +36,11 @@
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
           <span class="nav-item-label">Students</span>
         </a>
-        <a href="add-student.html" class="nav-item active">
+        <a href="add-student.html" class="nav-item">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><line x1="20" y1="8" x2="20" y2="14"/><line x1="23" y1="11" x2="17" y2="11"/></svg>
           <span class="nav-item-label">Add Student</span>
         </a>
       </nav>
-      
 
       <div class="sidebar-footer">
         <div class="sidebar-footer-content">
@@ -63,62 +63,66 @@
         </button>
         <div class="header-left">
           <div>
-            <h1 class="page-title">Add Student</h1>
-            <p class="page-subtitle">Register a new student</p>
+            <h1 class="page-title">Dashboard</h1>
+            <p class="page-subtitle">Overview of all student data</p>
           </div>
         </div>
       </header>
 
-      <div class="form-card">
-        <div id="formAlert"></div>
-
-        <div class="form-grid">
-          <div class="form-group">
-            <label class="form-label">Roll Number <span class="required">*</span></label>
-            <input type="text" id="roll_number" class="form-input" placeholder="e.g. CSE2021001" />
-          </div>
-          <div class="form-group">
-            <label class="form-label">Full Name <span class="required">*</span></label>
-            <input type="text" id="name" class="form-input" placeholder="Student's full name" />
-          </div>
-          <div class="form-group">
-            <label class="form-label">Branch <span class="required">*</span></label>
-            <select id="branch" class="form-input">
-              <option value="">Select branch</option>
-              <option value="AIDS">AIDS</option>
-              <option value="AIML">AIML</option>
-              <option value="AR">AR</option>
-              <option value="IIOT">IIOT</option>
-              
-            </select>
-          </div>
-          <div class="form-group">
-            <label class="form-label">Year <span class="required">*</span></label>
-            <select id="year" class="form-input">
-              <option value="">Select year</option>
-              <option value="1">1st Year</option>
-              <option value="2">2nd Year</option>
-              <option value="3">3rd Year</option>
-              <option value="4">4th Year</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label class="form-label">Email <span class="required">*</span></label>
-            <input type="email" id="email" class="form-input" placeholder="student@college.edu" />
-          </div>
-          <div class="form-group">
-            <label class="form-label">Mobile <span class="required">*</span></label>
-            <input type="text" id="mobile" class="form-input" placeholder="10-digit mobile number" />
-          </div>
-          <div class="form-group form-group-full">
-            <label class="form-label">Address</label>
-            <textarea id="address" class="form-input form-textarea" placeholder="Hostel / Home address"></textarea>
-          </div>
+      <div class="stats-grid" id="statsGrid">
+        <div class="stat-card loading">
+          <div class="stat-label">Total Students</div>
+          <div class="stat-value" id="totalStudents">—</div>
         </div>
+        <div class="stat-card loading">
+          <div class="stat-label">Hostellers</div>
+          <div class="stat-value" id="hostellers">—</div>
+        </div>
+        <div class="stat-card loading">
+          <div class="stat-label">Day Scholars</div>
+          <div class="stat-value" id="dayScholars">—</div>
+        </div>
+        <div class="stat-card loading">
+          <div class="stat-label">Placed</div>
+          <div class="stat-value" id="placed">—</div>
+        </div>
+        <div class="stat-card loading">
+          <div class="stat-label">NCC</div>
+          <div class="stat-value" id="ncc">—</div>
+        </div>
+        <div class="stat-card loading">
+          <div class="stat-label">NSS</div>
+          <div class="stat-value" id="nss">—</div>
+        </div>
+        <div class="stat-card loading">
+          <div class="stat-label">Loan Holders</div>
+          <div class="stat-value" id="loans">—</div>
+        </div>
+        <div class="stat-card loading">
+          <div class="stat-label">Internships</div>
+          <div class="stat-value" id="internships">—</div>
+        </div>
+      </div>
 
-        <div class="form-actions">
-          <a href="students.html" class="btn btn-ghost">Cancel</a>
-          <button class="btn btn-primary" id="submitBtn">Create Student</button>
+      <div class="charts-row">
+        <div class="chart-card">
+          <h3 class="chart-title">Branch-wise Students</h3>
+          <div id="branchChart" class="bar-chart"></div>
+        </div>
+        <div class="chart-card">
+          <h3 class="chart-title">Year-wise Students</h3>
+          <div id="yearChart" class="bar-chart"></div>
+        </div>
+      </div>
+
+      <div class="charts-row">
+        <div class="chart-card">
+          <h3 class="chart-title">Category Breakdown</h3>
+          <div id="categoryChart" class="bar-chart"></div>
+        </div>
+        <div class="chart-card">
+          <h3 class="chart-title">Scholarship Breakdown</h3>
+          <div id="scholarshipChart" class="bar-chart"></div>
         </div>
       </div>
     </main>
@@ -127,6 +131,6 @@
   <footer class="universal-footer">Made by IoSC & AWS EDC | Support: <a href="mailto:iosc.aws@gmail.com" style="text-decoration: underline;">iosc.aws@gmail.com</a></footer>
 
   <script src="js/api.js"></script>
-  <script src="js/pages/add-student.js"></script>
+  <script src="js/pages/dashboard.js"></script>
 </body>
 </html>

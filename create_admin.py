@@ -6,11 +6,11 @@ from app.model.models import DBUser
 async def create_admin():
     async with SessionLocal() as session:
         # Create admin
+        pwd_hash = await get_password_hash('TcM#7kP$9vL@2wQx')
         new_admin = DBUser(
             username='AdminIA100',
             role='admin',
-            password_hash=get_password_hash('TcM#7kP$9vL@2wQx'),
-            password_changed=True
+            password_hash=pwd_hash
         )
         session.add(new_admin)
         await session.commit()

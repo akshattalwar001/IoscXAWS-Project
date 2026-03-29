@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   if (token) {
     if (savedRole === 'admin') {
-      window.location.href = 'index.html'; // Adjust to admin dashboard
+      window.location.href = 'admin-dashboard.html'; // Adjust to admin dashboard
     } else if (savedRole === 'student') {
       const mustChange = localStorage.getItem('must_change_password') === 'true';
       if (mustChange) {
@@ -183,7 +183,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
       // Redirect based on role
       if (currentRole === 'admin') {
-        window.location.href = 'index.html';
+        window.location.href = 'admin-dashboard.html';
       } else {
         if (data.must_change_password) {
           window.location.href = 'change-password.html';
