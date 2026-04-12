@@ -8,11 +8,11 @@ def get_branch(prgname):
     prgname = prgname.upper()
     if "ARTIFICIAL INTELLIGENCE AND MACHINE LEARNING" in prgname:
         return "AIML"
-    elif "AIDS" in prgname or "ARTIFICIAL INTELLIGENCE AND DATA SCIENCE" in prgname:
+    elif "ARTIFICIAL INTELLIGENCE AND DATA SCIENCE" in prgname or "AIDS" in prgname:
         return "AIDS"
     elif "INTERNET OF THINGS" in prgname or "IIOT" in prgname:
         return "IIOT"
-    elif "AUGMENTED REALITY" in prgname or "AR" in prgname:
+    elif "AUTOMATION AND ROBOTICS" in prgname or "AR" in prgname:
         return "AR"
     else:
         return "UNKNOWN"
