@@ -18,7 +18,7 @@
   --danger-dim: rgba(200, 85, 85, 0.1);
   --success: #4A7C59;
   --success-dim: rgba(74, 124, 89, 0.1);
-  --sidebar-w-expanded: 272px;
+  --sidebar-w-expanded: 230px;
   --sidebar-w-collapsed: 76px;
   --sidebar-w: var(--sidebar-w-expanded);
   --radius: 6px;
@@ -534,7 +534,7 @@ a { color: inherit; text-decoration: none; }
 .main-content {
   margin-left: var(--sidebar-w);
   flex: 1;
-  padding: 40px 48px;
+  padding: 24px 32px;
   max-width: calc(100vw - var(--sidebar-w));
   transition: margin-left 0.3s cubic-bezier(0.4, 0, 0.2, 1), max-width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
@@ -1307,6 +1307,12 @@ input[type="file"].form-input::-webkit-file-upload-button {
   font-family: var(--font-mono);
   color: var(--success);
   margin-top: 6px;
+}
+
+@media (max-width: 1200px) {
+  .main-content {
+    padding: 20px 24px;
+  }
 }
 
 @media (max-width: 980px) {
