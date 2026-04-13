@@ -1,6 +1,6 @@
 const API = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') 
   ? "http://localhost:8000" 
-  : "https://estudent-cell.onrender.com";
+  : "http://213.210.37.18";
 
 // Toggle password visibility
 function togglePasswordVisibility(inputId, eyeIconId, eyeOffIconId) {
@@ -123,11 +123,13 @@ async function submitChangePassword(e) {
       return;
     }
 
-    const pwdResponse = await fetch(`${API}/account/change-password?new_password=${encodeURIComponent(newPassword)}`, {
+    const pwdResponse = await fetch(`${API}/account/change-password`, {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${token}`
-      }
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ old_password: currentPassword, new_password: newPassword })
     });
     
     if (!pwdResponse.ok) {
