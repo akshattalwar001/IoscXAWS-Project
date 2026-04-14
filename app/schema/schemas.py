@@ -50,10 +50,14 @@ class ClassificationResponse(ClassificationBase):
     student_id: str
 
 class ParentBase(BaseModel):
-    parent_name: str
-    profession: Optional[str] = None
-    contact_number: Optional[str] = None
-    email: Optional[str] = None
+    father_name: Optional[str] = None
+    father_profession: Optional[str] = None
+    father_contact: Optional[str] = None
+    father_email: Optional[str] = None
+    mother_name: Optional[str] = None
+    mother_profession: Optional[str] = None
+    mother_contact: Optional[str] = None
+    mother_email: Optional[str] = None
 
 class ParentCreate(ParentBase):
     pass
