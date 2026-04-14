@@ -31,7 +31,7 @@ async def resetPasswordToDefault(db: AsyncSession, student_id: str):
     if not parent:
         raise ValueError("Parent details not found for this student")
 
-    hashed_pw = pwd_hasher.hash(parent.parent_name)
+    hashed_pw = pwd_hasher.hash(parent.father_name or "Password@123")
 
     await db.execute(
         update(DBUser)
