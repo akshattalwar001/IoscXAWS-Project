@@ -21,8 +21,7 @@ async def send_otp(db: AsyncSession, enrollment_number: str, email: str):
     await db.commit()
 
     otp = generate_otp()
-    expires_at = (datetime.utcnow() + timedelta(minutes=10)).isoformat()
-
+    expires_at = datetime.utcnow() + timedelta(minutes=10)
     otp_record = OTPStore(
         enrollment_number=enrollment_number,
         email=email,
@@ -64,7 +63,7 @@ async def verify_otp(db: AsyncSession, enrollment_number: str, email: str, otp: 
     if not record:
         raise ValueError("Invalid OTP")
 
-    if datetime.utcnow() > datetime.fromisoformat(record.expires_at):
+    if datetime.utcnow() > record.expires_at:
         raise ValueError("OTP has expired")
 
     record.is_used = True
