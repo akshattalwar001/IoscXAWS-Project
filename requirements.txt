@@ -14,3 +14,4 @@ pytest
 pytest-asyncio
 httpx
 aiosqlite
+resend
