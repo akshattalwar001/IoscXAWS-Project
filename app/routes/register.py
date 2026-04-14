@@ -46,7 +46,7 @@ async def send_otp_route(request: SendOTPRequest, db: AsyncSession = Depends(get
 
 @router.post("/verify-otp")
 async def verify_otp_route(request: VerifyOTPRequest, db: AsyncSession = Depends(get_db)):
-    if not (request.email.endswith("@std.ggsipu.ac.in") or request.email.endswith("@gmail.com")):
+    if not request.email.endswith("@std.ggsipu.ac.in"):
         raise HTTPException(status_code=400, detail="Email must end with @std.ggsipu.ac.in or @gmail.com")
 
     try:
