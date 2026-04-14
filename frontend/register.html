@@ -400,7 +400,7 @@
 
       if (!enrollmentNumber) { showAlert('Please enter your enrollment number'); return; }
       if (!studentEmail) { showAlert('Please enter your email'); return; }
-      if (!studentEmail.endsWith('@std.ggsipu.ac.in') && !studentEmail.endsWith('@gmail.com')) {
+      if (!studentEmail.endsWith('@std.ggsipu.ac.in')) {
         showAlert('Email must end with @std.ggsipu.ac.in or @gmail.com');
         return;
     }
