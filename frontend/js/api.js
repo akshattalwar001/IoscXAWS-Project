@@ -10,7 +10,7 @@ async function apiFetch(path, options = {}) {
   });
   if (!res.ok) {
     const err = await res.json().catch(() => ({ detail: "Request failed" }));
-    throw new Error(err.detail || "Request failed");
+    throw new Error(Array.isArray(err.detail) ? err.detail.map(e => e.msg).join(", ") : err.detail || "Request failed");
   }
   return res.json();
 }
