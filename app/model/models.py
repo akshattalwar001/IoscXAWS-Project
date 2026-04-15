@@ -18,6 +18,7 @@ class ScholarshipEnum(str, enum.Enum):
     EWS = "EWS"
     SC = "SC"
     Private = "Private"
+    Other = "Other"
 
 class InternshipTypeEnum(str, enum.Enum):
     Government = "Government"
