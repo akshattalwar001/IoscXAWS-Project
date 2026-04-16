@@ -251,7 +251,7 @@ function renderAcadocs(a) {
   if (!a) { el.innerHTML = '<p class="no-data">No academic documents record added yet.</p>'; return; }
   function dlBtn(label, type, path) {
     if (!path) return `<span style="color:#666;">No file uploaded</span>`;
-    return `<a href="${API}/students/${studentId}/academic-documents/download/${type}" class="btn btn-ghost btn-sm" download style="text-decoration:none;">⬇ Download ${label}</a>`;
+    return `<a href="${API}/${path}" class="btn btn-ghost btn-sm" download style="text-decoration:none;">⬇ Download ${label}</a>`;
   }
   el.innerHTML = `
     <div class="info-grid">
