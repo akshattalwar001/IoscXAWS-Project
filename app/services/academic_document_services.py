@@ -92,7 +92,9 @@ async def upload_academic_docs(
     obj = result.scalar_one_or_none()
 
     if not obj:
-        raise ValueError("Academic documents record not found. Create it first.")
+        obj = models.AcademicDocuments(student_id=student_id)
+        db.add(obj)
+        await db.flush()
 
     if marksheets:
         obj.marksheets_path = save_file(student_id, marksheets)
