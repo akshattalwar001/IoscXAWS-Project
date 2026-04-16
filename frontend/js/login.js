@@ -40,7 +40,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // Environment-based API determination
   const API_URL = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') 
     ? "http://localhost:8000" 
-    : "http://ggsipuedc.in";
+    : "https://ggsipuedc.in";
 
   // ----------------------------------------------------
   // Pre-fill Remember Me
