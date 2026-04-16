@@ -196,9 +196,9 @@ function renderDocuments(d) {
   const dlA = document.getElementById("dl_aadhaar");
   const dlP = document.getElementById("dl_pan");
   const dlI = document.getElementById("dl_id_card");
-  if (dlA) { if (d.aadhaar_path) { dlA.href = `${API}/students/${studentId}/documents/download/aadhaar`; dlA.style.display = ""; } else dlA.style.display = "none"; }
-  if (dlP) { if (d.pan_path) { dlP.href = `${API}/students/${studentId}/documents/download/pan`; dlP.style.display = ""; } else dlP.style.display = "none"; }
-  if (dlI) { if (d.id_card_path) { dlI.href = `${API}/students/${studentId}/documents/download/id_card`; dlI.style.display = ""; } else dlI.style.display = "none"; }
+  if (dlA) { if (d.aadhaar_path) { dlA.href = `${API}/students/${studentId}/documents/download/aadhaar`; dlA.download = d.aadhaar_path.split('/').pop(); dlA.style.display = ""; } else dlA.style.display = "none"; }
+  if (dlP) { if (d.pan_path) { dlP.href = `${API}/students/${studentId}/documents/download/pan`; dlP.download = d.pan_path.split('/').pop(); dlP.style.display = ""; } else dlP.style.display = "none"; }
+  if (dlI) { if (d.id_card_path) { dlI.href = `${API}/students/${studentId}/documents/download/id_card`; dlI.download = d.id_card_path.split('/').pop(); dlI.style.display = ""; } else dlI.style.display = "none"; }
   el.innerHTML = `
     <div class="info-grid">
       <div class="info-item"><span class="info-label">Aadhaar Verified</span><span class="info-value">${boolDisplay(d.aadhaar_verified)}</span></div>

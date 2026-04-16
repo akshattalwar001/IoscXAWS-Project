@@ -179,7 +179,8 @@ function renderDocuments(d) {
   if (!d) { el.innerHTML = '<p class="no-data">No document record added yet.</p>'; return; }
   function dlBtn(label, type, path) {
     if (!path) return `<span style="color:#666;">No file uploaded</span>`;
-    return `<a href="${API}/students/${studentId}/documents/download/${type}" class="btn btn-ghost btn-sm" download style="text-decoration:none;">⬇ Download ${label}</a>`;
+    const filename = path.split('/').pop();
+    return `<a href="${API}/students/${studentId}/documents/download/${type}" class="btn btn-ghost btn-sm" download="${filename}" style="text-decoration:none;">⬇ Download ${label}</a>`;
   }
   el.innerHTML = `
     <div class="info-grid">
