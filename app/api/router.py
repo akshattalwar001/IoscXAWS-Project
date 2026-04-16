@@ -1,3 +1,4 @@
+from fastapi import APIRouter
 from app.routes import (
     student,
     auth,
