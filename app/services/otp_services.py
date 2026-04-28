@@ -104,7 +104,7 @@ async def verify_otp(db: AsyncSession, enrollment_number: str, email: str, otp: 
             OTPStore.is_used == False
         )
     )
-    record = result.scalar_one_or_none()
+    record = result.scalars().first()
 
     if not record:
         raise ValueError("No active OTP found. Please request a new OTP.")
