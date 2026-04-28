@@ -368,6 +368,7 @@
 
     let enrollmentNumber = '';
     let studentEmail = '';
+    let rateLimited = false;
 
     function showAlert(message, type = 'error') {
       const alertBox = document.getElementById('alertBox');
@@ -482,6 +483,11 @@
 
     async function resendOTP() {
       const resendBtn = document.getElementById('resendBtn');
+      if (rateLimited) {
+        resendBtn.disabled = true;
+        resendBtn.textContent = 'Limit reached. Try after 10 mins';
+        return;
+      }
       resendBtn.disabled = true;
       resendBtn.textContent = 'Sending...';
       hideAlert();
@@ -499,7 +505,9 @@
           showAlert(data.detail || 'Failed to resend OTP');
 
           if (res.status === 429) {
+            rateLimited = true;
             resendBtn.textContent = 'Limit reached. Try after 10 mins';
+            resendBtn.disabled = true;
             return;
           }
 
