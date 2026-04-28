@@ -24,7 +24,7 @@ async def send_otp(db: AsyncSession, enrollment_number: str, email: str):
     now = datetime.utcnow()
     window_start = now - timedelta(minutes=OTP_WINDOW_MINUTES)
 
-    # count OTPs sent in the last hour for this enrollment
+    # count OTPs sent in the last 10 minutes BEFORE deleting anything
     recent_result = await db.execute(
         select(OTPStore).where(
             OTPStore.enrollment_number == enrollment_number,
@@ -39,9 +39,12 @@ async def send_otp(db: AsyncSession, enrollment_number: str, email: str):
             f"{MAX_OTP_SENDS_PER_HOUR} OTPs per 10 minutes. Please try again later."
         )
 
-    
+    # Delete only OTPs outside the window (older than 10 mins)
     all_existing = await db.execute(
-        select(OTPStore).where(OTPStore.enrollment_number == enrollment_number)
+        select(OTPStore).where(
+            OTPStore.enrollment_number == enrollment_number,
+            OTPStore.created_at < window_start
+        )
     )
     for row in all_existing.scalars().all():
         await db.delete(row)
